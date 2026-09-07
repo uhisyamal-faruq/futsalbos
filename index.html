@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Punyamar-bos — Sewa Lapangan Futsal</title>
+  <meta name="description" content="Booking lapangan futsal online, multi-cabang, real-time. Punyamar-bos.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=2">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>">
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="#/" class="brand">
+        <span class="brand-badge">⚽</span>
+        <span class="brand-name">Punyamar<b>-bos</b></span>
+      </a>
+      <nav class="nav-links" id="navLinks"></nav>
+      <div class="nav-actions" id="navActions"></div>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Router outlet -->
+  <main id="app" class="app"></main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <div class="brand"><span class="brand-badge">⚽</span><span class="brand-name">Punyamar<b>-bos</b></span></div>
+        <p class="footer-desc">Platform sewa lapangan futsal multi-cabang. Booking instan, harga transparan, tanpa ribet.</p>
+      </div>
+      <div>
+        <h4>Jelajah</h4>
+        <a href="#/cabang">Semua Cabang</a>
+        <a href="#/login">Masuk</a>
+        <a href="#/register">Daftar</a>
+      </div>
+      <div>
+        <h4>Layanan</h4>
+        <a href="#/booking/riwayat">Riwayat Booking</a>
+        <a href="#/admin/dashboard">Admin Cabang</a>
+        <a href="#/superadmin/dashboard">Super Admin</a>
+      </div>
+      <div>
+        <h4>Kontak</h4>
+        <p class="footer-desc">halo@punyamar-bos.id<br>+62 812 3456 7890<br>Senin–Minggu 08.00–23.00</p>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      © <span id="year"></span> Punyamar-bos. Frontend MVP demo — data tersimpan lokal di browser.
+    </div>
+  </footer>
+
+  <!-- Toast container -->
+  <div class="toast-wrap" id="toastWrap"></div>
+
+  <!-- Modal root -->
+  <div class="modal-root" id="modalRoot" hidden></div>
+
+  <!-- Invoice print area -->
+  <div id="printArea"></div>
+
+  <script src="js/store.js?v=2"></script>
+  <script src="js/auth.js?v=2"></script>
+  <script src="js/router.js?v=2"></script>
+  <script src="js/ui.js?v=2"></script>
+  <script src="js/views-public.js?v=2"></script>
+  <script src="js/views-customer.js?v=2"></script>
+  <script src="js/views-admin.js?v=2"></script>
+  <script src="js/views-superadmin.js?v=2"></script>
+  <script src="js/app.js?v=2"></script>
+</body>
+</html>
