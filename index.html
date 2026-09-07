@@ -1,0 +1,218 @@
+\\
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sewa Lapangan Futsal — Cari & Booking lapangan futsal terdekat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ==================== HEADER / NAV ==================== -->
+<header class="relative z-40 border-b border-white/5 bg-[#0a1811]/80 backdrop-blur-md">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
+        <a href="#" class="display text-2xl leading-none tracking-wide text-white hover:opacity-80 transition-opacity">
+            FTL<span class="led">.</span>ARENA
+        </a>
+        <nav class="flex items-center gap-4 text-sm font-medium text-zinc-300">
+            <a href="#cari" class="hover:text-white transition-colors hidden sm:inline">Cari Lapangan</a>
+            <a href="#cara" class="hover:text-white transition-colors hidden sm:inline">Cara Booking</a>
+            <a href="#" class="rounded-full border border-white/10 px-4 py-1.5 hover:bg-white/5 transition-colors">Masuk</a>
+            <a href="#" class="led-bg rounded-full px-4 py-1.5 font-semibold hover:opacity-90 transition-opacity">Daftar</a>
+        </nav>
+    </div>
+</header>
+
+<!-- ==================== HERO ==================== -->
+<section class="court-hero relative flex min-h-[70vh] items-center overflow-hidden border-b border-white/5">
+    <!-- Gradient overlay -->
+    <div class="absolute inset-0 bg-gradient-to-b from-[#0a1811] via-transparent to-[#0a1811] z-10"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-[#0a1811]/60 via-transparent to-[#0a1811]/40 z-10"></div>
+
+    <div class="relative z-20 mx-auto w-full max-w-6xl px-4 pt-16 pb-20 sm:px-6 sm:pt-20 sm:pb-28">
+        <div class="flex flex-col gap-6 sm:gap-8">
+            <!-- Eyebrow -->
+            <div class="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.15em]">
+                <span class="rounded-full border border-[var(--turf-2)] px-3 py-1 text-[var(--turf-3)]">7 Cabang</span>
+                <span class="rounded-full border border-[var(--turf-2)] px-3 py-1 text-[var(--turf-3)]">24 Lapangan</span>
+                <span class="text-concrete">Online Booking</span>
+            </div>
+
+            <!-- Headline -->
+            <h1 class="display text-[clamp(3rem,12vw,7rem)] leading-[0.9] tracking-tight text-white max-w-3xl">
+                MAIN<span class="led">.</span>BOOK<span class="led">.</span><br />
+                <span class="text-[var(--turf-3)]">GAS<span class="text-[var(--led)]">!</span></span>
+            </h1>
+
+            <!-- Sub -->
+            <p class="max-w-xl text-base leading-relaxed text-zinc-400 sm:text-lg">
+                Cari, pilih, dan booking lapangan futsal dari cabang terdekatmu. 
+                Harga transparan, slot real-time, langsung konfirmasi.
+            </p>
+
+            <!-- CTA -->
+            <div class="flex flex-wrap gap-3">
+                <a href="#cari" class="led-bg rounded-full px-6 py-3 font-semibold text-sm hover:opacity-90 transition-opacity shadow-lg shadow-[var(--led)]/20">
+                    &#8593; Cari Lapangan
+                </a>
+                <a href="#cara" class="rounded-full border border-white/10 px-6 py-3 text-sm font-medium hover:bg-white/5 transition-colors">
+                    Cara Booking &rarr;
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Court marking hints — decorative bottom edge -->
+    <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#0a1811] to-transparent z-10"></div>
+</section>
+
+<!-- ==================== SEARCH / CABANG ==================== -->
+<section id="cari" class="border-b border-white/5 py-16 sm:py-20">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+        <!-- Section header -->
+        <div class="mb-10 flex flex-wrap items-end justify-between gap-4">
+            <div>
+                <span class="display text-5xl sm:text-6xl leading-none text-white">PILIH CABANG</span>
+                <p class="mt-2 text-sm text-zinc-500">Pilih cabang terdekat buat main bola.</p>
+            </div>
+            <div class="relative">
+                <input id="branchSearch" type="text" placeholder="Cari cabang..." class="w-full min-w-[200px] rounded-full border border-white/10 bg-[#0f2b21] px-4 py-2 text-sm placeholder-zinc-500 focus:border-[var(--led)] focus:outline-none" oninput="filterBranches(this.value)" />
+            </div>
+        </div>
+
+        <!-- Branch grid -->
+        <div id="branchGrid" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <!-- injected by JS -->
+        </div>
+
+        <!-- Field / Layout selector (appears after branch) -->
+        <div id="fieldSection" class="mt-12 hidden">
+            <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
+                <div>
+                    <span id="selectedBranchName" class="display text-3xl sm:text-4xl leading-none text-white"></span>
+                    <p class="mt-1 text-sm text-zinc-500">Pilih lapangan.</p>
+                </div>
+                <button onclick="deselectBranch()" class="text-xs text-zinc-500 hover:text-white transition-colors">&larr; Ganti cabang</button>
+            </div>
+            <div class="field-tabs mb-8" id="fieldTabs">
+                <!-- injected by JS -->
+            </div>
+
+            <!-- Schedule -->
+            <div class="grid gap-6 lg:grid-cols-[1fr_280px]">
+                <!-- Left: date + grid -->
+                <div>
+                    <div class="mb-4 flex items-center gap-4">
+                        <input id="datePicker" type="text" class="rounded-full border border-white/10 bg-[#0f2b21] px-4 py-2 text-sm font-medium focus:border-[var(--led)] focus:outline-none cursor-pointer w-full max-w-[220px]" placeholder="Pilih tanggal..." readonly />
+                        <span id="selectedDateLabel" class="text-sm text-concrete"></span>
+                    </div>
+                    <div id="scheduleGrid" class="slot-grid">
+                        <!-- injected by JS -->
+                    </div>
+                    <div id="noSlots" class="mt-8 hidden text-center text-sm text-zinc-500">
+                        <p class="text-lg led font-semibold">Tutup</p>
+                        <p>Tidak ada jadwal tersedia di tanggal ini.</p>
+                    </div>
+                </div>
+
+                <!-- Right: legend + info -->
+                <div class="space-y-4 text-sm">
+                    <div class="rounded-lg border border-white/5 bg-[#0f2b21] p-4">
+                        <h4 class="mb-3 text-xs font-semibold uppercase tracking-[0.1em] text-zinc-500">Status Slot</h4>
+                        <div class="space-y-2.5">
+                            <div class="flex items-center gap-3">
+                                <span class="block h-4 w-4 rounded-sm bg-[var(--card)] border border-[var(--led)]/20"></span>
+                                <span class="text-zinc-400">Tersedia</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="block h-4 w-4 rounded-sm bg-[var(--led)]"></span>
+                                <span class="text-zinc-400">Dipilih</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="block h-4 w-4 rounded-sm bg-[#1c0f0f] border border-[var(--blood)]/20"></span>
+                                <span class="text-zinc-400">Blackout / Libur</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="block h-4 w-4 rounded-sm bg-[#101c15] opacity-35"></span>
+                                <span class="text-zinc-400">Sudah Dipesan</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rounded-lg border border-white/5 bg-[#0f2b21] p-4">
+                        <h4 class="mb-2 text-xs font-semibold uppercase tracking-[0.1em] text-zinc-500">Info Harga</h4>
+                        <p class="text-zinc-400 leading-relaxed text-xs">
+                            Harga per slot dihitung otomatis berdasarkan aturan <em>peak</em> / <em>off-peak</em>.
+                            Warna amber menandakan slot yang kamu pilih.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== STEPS ==================== -->
+<section id="cara" class="border-b border-white/5 py-16 sm:py-20">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+        <div class="mb-10 text-center">
+            <span class="display text-5xl sm:text-6xl leading-none text-white">CARA BOOKING</span>
+            <p class="mt-2 text-sm text-zinc-500">Cepat, gampang, garansi dapet lapangan.</p>
+        </div>
+
+        <div class="grid gap-6 sm:grid-cols-3">
+            <div class="card-bg rounded-xl border border-white/5 p-6 text-center">
+                <div class="step-num mx-auto mb-4">1</div>
+                <h3 class="mb-2 text-lg font-bold text-white">Pilih Cabang</h3>
+                <p class="text-sm text-zinc-400 leading-relaxed">Cari cabang terdekat, lihat lapangan yang tersedia beserta harganya.</p>
+            </div>
+            <div class="card-bg rounded-xl border border-white/5 p-6 text-center">
+                <div class="step-num mx-auto mb-4">2</div>
+                <h3 class="mb-2 text-lg font-bold text-white">Pilih Slot</h3>
+                <p class="text-sm text-zinc-400 leading-relaxed">Pilih tanggal & jam dari grid real-time. Harga langsung keliatan.</p>
+            </div>
+            <div class="card-bg rounded-xl border border-white/5 p-6 text-center">
+                <div class="step-num mx-auto mb-4">3</div>
+                <h3 class="mb-2 text-lg font-bold text-white">Booking & Bayar</h3>
+                <p class="text-sm text-zinc-400 leading-relaxed">Konfirmasi, upload bukti transfer, admin verifikasi — selesai!</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="border-t border-white/5 py-12">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+        <div class="flex flex-col items-center gap-4 text-center text-sm text-zinc-500 sm:flex-row sm:justify-between">
+            <span class="display text-xl tracking-wide text-white">FTL<span class="led">.</span>ARENA</span>
+            <span>&copy; 2026 FTL.ARENA &mdash; All rights reserved.</span>
+        </div>
+    </div>
+</footer>
+
+<!-- ==================== STICKY BOOKING BAR ==================== -->
+<div id="bookingBar" class="booking-bar hidden">
+    <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-4 text-sm">
+            <span id="barInfo" class="text-zinc-400">Belum ada slot dipilih</span>
+        </div>
+        <div class="flex items-center gap-4">
+            <span id="barTotal" class="mono text-2xl font-bold text-white">Rp 0</span>
+            <button id="barBookBtn" class="led-bg rounded-full px-6 py-2.5 text-sm font-bold hover:opacity-90 transition-opacity disabled:opacity-30 disabled:cursor-not-allowed">
+                Booking &rarr;
+            </button>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
+ 
