@@ -1,0 +1,269 @@
+:root {
+    --turf: #1b4332;
+    --turf-2: #2d6a4f;
+    --turf-3: #40916c;
+    --chalk: #f8fafc;
+    --led: #ffd60a;
+    --led-dim: #b38600;
+    --ink: #0d1f17;
+    --blood: #c1121f;
+    --concrete: #8d99ae;
+    --fg: #e2e8f0;
+    --muted: #94a3b8;
+    --card: #0f2b21;
+}
+
+/* Base */
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition-duration: 0s !important; animation-duration: 0s !important; } }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--ink);
+    color: var(--fg);
+}
+
+.display { font-family: 'Bebas Neue', sans-serif; }
+.mono { font-family: 'JetBrains Mono', monospace; }
+.turf-bg { background: var(--turf); }
+.turf-2-bg { background: var(--turf-2); }
+.turf-3-bg { background: var(--turf-3); }
+.led { color: var(--led); }
+.led-bg { background: var(--led); color: var(--ink); }
+.blood { color: var(--blood); }
+.blood-bg { background: var(--blood); }
+.chalk { color: var(--chalk); }
+.concrete { color: var(--concrete); }
+.ink-bg { background: var(--ink); }
+.card-bg { background: var(--card); }
+
+/* Court line hero graphic */
+.court-hero {
+    position: relative;
+    overflow: hidden;
+}
+.court-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        /* Center circle */
+        radial-gradient(ellipse 80px 50px at 50% 70%, transparent calc(100% - 2px), rgba(248,250,252,0.12) calc(100% - 1px), transparent 100%),
+        /* Midfield line */
+        linear-gradient(90deg, transparent calc(50% - 1px), rgba(248,250,252,0.15) calc(50% - 1px), rgba(248,250,252,0.15) calc(50% + 1px), transparent calc(50% + 1px)),
+        /* Goal left */
+        linear-gradient(90deg, rgba(248,250,252,0.1) calc(0% + 40px), transparent calc(0% + 42px)),
+        /* Goal right */
+        linear-gradient(90deg, transparent calc(100% - 42px), rgba(248,250,252,0.1) calc(100% - 40px)),
+        /* Side lines */
+        linear-gradient(180deg, transparent calc(0% + 30px), rgba(248,250,252,0.18) calc(0% + 30px), rgba(248,250,252,0.18) calc(0% + 32px), transparent calc(0% + 32px)),
+        linear-gradient(180deg, transparent calc(100% - 32px), rgba(248,250,252,0.18) calc(100% - 32px), rgba(248,250,252,0.18) calc(100% - 30px), transparent calc(100% - 30px));
+    pointer-events: none;
+}
+.court-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(45,106,79,0.3) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+/* LED scoreboard cells — the signature */
+.slot-grid {
+    display: grid;
+    gap: 4px;
+}
+.slot-cell {
+    background: var(--card);
+    border: 1px solid rgba(255,214,10,0.08);
+    border-radius: 4px;
+    padding: 8px 6px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.12s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    min-height: 56px;
+    font-family: 'JetBrains Mono', monospace;
+    position: relative;
+    user-select: none;
+}
+.slot-cell:focus-visible {
+    outline: 2px solid var(--led);
+    outline-offset: 2px;
+}
+.slot-cell:hover:not(.unavailable) {
+    border-color: var(--led);
+    background: #1b3d2a;
+}
+.slot-cell.selected {
+    background: var(--led);
+    border-color: var(--led);
+    color: var(--ink);
+    box-shadow: 0 0 16px rgba(255,214,10,0.3);
+}
+.slot-cell .time {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    line-height: 1.1;
+}
+.slot-cell .price {
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.1;
+}
+.slot-cell.selected .price { color: var(--ink); }
+.slot-cell.unavailable {
+    cursor: not-allowed;
+    opacity: 0.35;
+    background: #101c15;
+    border-color: transparent;
+}
+.slot-cell.blocked {
+    cursor: not-allowed;
+    background: #1c0f0f;
+    border-color: rgba(193,18,31,0.15);
+    opacity: 0.5;
+}
+.slot-cell.booked {
+    cursor: not-allowed;
+    background: #101c15;
+    border-color: rgba(141,153,174,0.08);
+    opacity: 0.35;
+}
+.slot-cell .slot-label {
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--concrete);
+    margin-top: 1px;
+}
+.slot-cell.selected .slot-label { color: rgba(0,0,0,0.5); }
+
+/* Branches */
+.branch-card {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,0.04);
+    border-radius: 8px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    position: relative;
+}
+.branch-card:hover { border-color: var(--led); }
+.branch-card.active {
+    border-color: var(--led);
+    box-shadow: 0 0 0 1px var(--led);
+}
+.branch-card:focus-visible {
+    outline: 2px solid var(--led);
+    outline-offset: 2px;
+}
+.branch-card .badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: var(--turf-2);
+    color: var(--chalk);
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* Sticky booking bar */
+.booking-bar {
+    position: sticky;
+    bottom: 0;
+    background: rgba(13,31,23,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(255,214,10,0.12);
+    padding: 12px 24px;
+    z-index: 50;
+    transition: transform 0.2s ease;
+}
+.booking-bar.hidden { transform: translateY(100%); pointer-events: none; }
+
+/* Steps */
+.step-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px; height: 36px;
+    background: var(--turf-2);
+    border-radius: 50%;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+/* Focus */
+*:focus-visible { outline: 2px solid var(--led); outline-offset: 2px; }
+
+/* Flatpickr overrides */
+.flatpickr-calendar { background: var(--card) !important; border: 1px solid rgba(255,255,255,0.06) !important; box-shadow: 0 8px 32px rgba(0,0,0,0.6) !important; }
+.flatpickr-day { color: var(--fg) !important; font-family: 'Inter', sans-serif !important; }
+.flatpickr-day.today { border-color: var(--turf-2) !important; }
+.flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange, .flatpickr-day.inRange { background: var(--turf-2) !important; border-color: var(--turf-2) !important; }
+.flatpickr-day.disabled { opacity: 0.25 !important; }
+.flatpickr-months .flatpickr-month, .flatpickr-weekday { background: transparent !important; color: var(--fg) !important; }
+.flatpickr-current-month .flatpickr-monthDropdown-months { color: var(--fg) !important; }
+.flatpickr-weekday { font-weight: 600 !important; font-size: 11px !important; }
+.flatpickr-prev-month svg, .flatpickr-next-month svg { fill: var(--fg) !important; }
+
+/* Responsive grid */
+@media (min-width: 640px) {
+    .slot-grid { grid-template-columns: repeat(4, 1fr); }
+}
+@media (min-width: 768px) {
+    .slot-grid { grid-template-columns: repeat(5, 1fr); }
+}
+@media (min-width: 1024px) {
+    .slot-grid { grid-template-columns: repeat(6, 1fr); }
+}
+@media (max-width: 639px) {
+    .slot-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Scrollable field list */
+.field-tabs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+}
+.field-tabs::-webkit-scrollbar { display: none; }
+.field-tab {
+    padding: 10px 20px;
+    border-radius: 999px;
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,0.04);
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.12s ease;
+    flex-shrink: 0;
+    font-family: 'Inter', sans-serif;
+}
+.field-tab:hover { border-color: var(--turf-2); }
+.field-tab.active {
+    background: var(--turf-2);
+    border-color: var(--turf-2);
+    color: white;
+}
+.field-tab:focus-visible {
+    outline: 2px solid var(--led);
+    outline-offset: 2px;
+}
+
+/* PWAs / utility */
+.arrow-link { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; transition: gap 0.12s ease; }
+.arrow-link:hover { gap: 10px; }
